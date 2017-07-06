@@ -1,0 +1,84 @@
+C:\Users\beula\ImportfromCSVtoPostgres
+
+12pm to 5.45pm max  => 12 to 17.45
+6pm to 7.45pm max+min/2  => 18 to 19.45
+8pm to 9.45am min => 20 to 24 and 0 to 9.45
+10am to 11.45am max+min/2 => 10 to 11.45
+
+--min
+select * from Historicaldata
+where historical_date='2015-01-12'
+and time between '00:00:00' and '09:45:00'
+
+update Historicaldata set outside_temp=(select mint from Weatherdata
+where date='2015-01-12')
+where historical_date='2015-01-12'
+and time between '00:00:00' and '09:45:00'
+
+select mint from Weatherdata
+where date='2015-01-12'
+
+--min
+select * from Historicaldata
+where historical_date='2015-01-12'
+and time between '20:00:00' and '24:00:00'
+
+update Historicaldata set outside_temp=(select mint from Weatherdata
+where date='2015-01-12')
+where historical_date='2015-01-12'
+and time between '20:00:00' and '24:00:00'
+
+select (maxt+mint)/2 as average from Weatherdata
+where date='2015-01-12'
+
+--max+min/2
+select * from Historicaldata
+where historical_date='2015-01-12'
+and time between '10:00:00' and '11:45:00'
+
+update Historicaldata set outside_temp=(select (maxt+mint)/2 as average from Weatherdata
+where date='2015-01-12')
+where historical_date='2015-01-12'
+and time between '10:00:00' and '11:45:00'
+
+select (maxt+mint)/2 as average from Weatherdata
+where date='2015-01-12'
+
+
+
+--max+min/2
+select * from Historicaldata
+where historical_date='2015-01-12'
+and time between '18:00:00' and '19:45:00'
+
+update Historicaldata set outside_temp=(select (maxt+mint)/2 as average from Weatherdata
+where date='2015-01-12')
+where historical_date='2015-01-12'
+and time between '18:00:00' and '19:45:00'
+
+select (maxt+mint)/2 as average from Weatherdata
+where date='2015-01-12'
+--max
+select * from Historicaldata
+where historical_date='2015-01-12'
+and time between '12:00:00' and '17:45:00'
+
+update Historicaldata set outside_temp=(select maxt from Weatherdata
+where date='2015-01-12')
+where historical_date='2015-01-12'
+and time between '12:00:00' and '17:45:00'
+
+select maxt from Weatherdata
+where date='2015-01-12'
+
+
+
+select * from Currentdata
+
+select * from Historicaldata 
+
+
+select distinct historical_date from Historicaldata 
+order by historical_date asc
+
+
